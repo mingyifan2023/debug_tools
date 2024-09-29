@@ -71,7 +71,7 @@ void LogToFile(T* ptr) {
 
 // 用于记录数组的函数
 template<typename T>
-void LogArrayToFile(const T* array, size_t size) {
+void LogToFile(const T* array, size_t size) {
     std::ofstream logFile(filePath, std::ios::app);
     if (logFile.is_open()) {
         logFile << "Array Elements: ";
