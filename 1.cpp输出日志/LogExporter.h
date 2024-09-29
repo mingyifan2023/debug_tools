@@ -179,3 +179,56 @@ void LogToFile(const MyStruct& myStruct) {
     }
 }
 
+
+
+
+// 如果对象是字符串，就在函数变量的地方加上&引用符号，
+// 这// 样在函数中就可以读取到这个字符串的值了，如果这个对象直接就是指针，则直接传入即可，也就同样可以读取到这个指针的值了
+// 
+// 如果对象是字符串，就在函数变量的地方加上&引用符号，这样在函数中就可以读取到这个字符串的值了，
+// 如果这个对象直接就是指针，则直接传入即可，也就同样可以读取到这个指针的值了
+//所以从函数通用性的角度，最好在定义值直接设置为指针传递，
+// 然后在实际始终是根据需要可以考虑是否使用引用符号&，但是如果一旦在定义是就定义为引用传递的话，那么在实际使用时如果传入了一个指针就不太方便
+
+
+
+
+
+// 通用日志记录函数
+// 内容使用指针传递保持通用性；路径使用引用传递，便于阅读
+
+// 非数组的，指针传递，非指针传递都满足了
+template<typename T>
+void LogNoArrayToFile(const T* dataPtr, const std::string& filePath) {
+    if (dataPtr == nullptr) {
+        std::cerr << "Null pointer provided." << std::endl;
+        return;
+    }
+
+    std::ofstream logFile(filePath, std::ios::app);
+    if (logFile.is_open()) {
+        logFile << *dataPtr << std::endl; // 解引用指针并调用重载的输出运算符
+        logFile.close();
+    }
+    else {
+        std::cerr << "Failed to open file at " << filePath << std::endl;
+    }
+}
+
+
+// 数组的，指针传递，非指针传递都满足了
+template<typename T>
+void LogArrayToFile(const T* data, size_t size, const std::string& filePath) {
+    std::ofstream LogArrayToFile(filePath, std::ios::app);
+    if (LogArrayToFile.is_open()) {
+        for (size_t i = 0; i < size; ++i) {
+            LogArrayToFile << data[i] << " "; // 输出数组元素
+        }
+        LogArrayToFile << std::endl; // 换行
+        LogArrayToFile.close();
+    }
+    else {
+        std::cerr << "Failed to open file at " << filePath << std::endl;
+    }
+}
+
