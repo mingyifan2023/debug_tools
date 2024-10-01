@@ -20,6 +20,37 @@
 //}
 
 
+//这里用来声明在cpp中自己创建的函数
+
+
+
+// LogUtil.h
+#ifndef LOGUTIL_H  // 防止重复包含
+#define LOGUTIL_H
+
+#include <string>
+#include <iostream>
+#include <fstream>
+
+// 函数声明
+void LogStringToFile(const std::string& data, const std::string& filePath);
+void LogIntToFile(int data, const std::string& filePath);
+void LogPointerToFile(const int* dataPtr, const std::string& filePath);
+
+#endif // LOGUTIL_H
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 // 使用模板泛型，通用化
 //涵盖了基本数据类型、指针、数组、STL 容器（如 std::vector、std::list 等）以及用户定义的结构体。
